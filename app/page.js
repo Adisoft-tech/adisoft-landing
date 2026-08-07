@@ -68,6 +68,7 @@ export default function Home() {
   const [isoHover, setIsoHover] = useState(false);
   const [trail, setTrail] = useState([]);
   const [form, setForm] = useState({ name: '', email: '', sector: '', message: '' });
+  const [sendState, setSendState] = useState('idle');
   const particleId = useRef(0);
   const particleColors = ['#0a3288', '#b8c0e0', '#3a63c8'];
 
@@ -111,12 +112,21 @@ export default function Home() {
 
   const onFieldChange = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
 
-  const onSubmitContact = (e) => {
+  const onSubmitContact = async (e) => {
     e.preventDefault();
-    const { name, email, sector, message } = form;
-    const subject = encodeURIComponent(`Nuevo contacto de ${name || 'un visitante'}`);
-    const body = encodeURIComponent(`Nombre: ${name}\nCorreo: ${email}\nSector: ${sector}\n\nCaso:\n${message}`);
-    window.location.href = `mailto:hello.adisoft@gmail.com?subject=${subject}&body=${body}`;
+    setSendState('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('send failed');
+      setSendState('sent');
+      setForm({ name: '', email: '', sector: '', message: '' });
+    } catch {
+      setSendState('error');
+    }
   };
 
   const isoTransform = `perspective(1200px) rotateX(${rot.x}deg) rotateY(${rot.y}deg) scale(1.06)`;
@@ -129,7 +139,10 @@ export default function Home() {
 
       <div style={{ position: 'sticky', top: 30, zIndex: 50, display: 'flex', justifyContent: 'center', width: '100%', padding: '0 16px' }}>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 'clamp(16px,3vw,44px)', padding: '10px 10px 10px 22px', borderRadius: 16, background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(50px)', WebkitBackdropFilter: 'blur(50px)', border: '1px solid rgba(0,0,0,0.1)', boxShadow: 'inset 0px 4px 4px 0px rgba(255,255,255,0.25)', width: 'fit-content', maxWidth: '92vw' }}>
-          <span style={{ fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 19, color: '#0b0b1f', letterSpacing: '-0.5px', whiteSpace: 'nowrap' }}>AdiSoft</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap' }}>
+            <img src="/adisoft-isotype.png" alt="AdiSoft" style={{ height: 22, width: 'auto' }} />
+            <span style={{ fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 19, color: '#0b0b1f', letterSpacing: '-0.5px' }}>AdiSoft</span>
+          </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(14px,2.4vw,28px)' }}>
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} onClick={onNavClick} style={{ position: 'relative', color: '#0b0b1f', fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', padding: '6px 4px', borderRadius: 8, transition: 'color .2s ease, background .2s ease' }}>
@@ -137,7 +150,7 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <a href="mailto:hello.adisoft@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 12, background: 'rgba(10,50,136,0.14)', border: '1px solid rgba(10,50,136,0.25)', color: '#0a3288', fontWeight: 600, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'transform .25s ease' }}>
+          <a href="#contacto" onClick={onNavClick} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 18px', borderRadius: 12, background: 'rgba(10,50,136,0.14)', border: '1px solid rgba(10,50,136,0.25)', color: '#0a3288', fontWeight: 600, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'transform .25s ease' }}>
             Contáctanos
             <span style={{ display: 'inline-block', width: 6, height: 6, borderTop: '2px solid #0a3288', borderRight: '2px solid #0a3288', transform: 'rotate(45deg)' }} />
           </a>
@@ -345,12 +358,12 @@ export default function Home() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 28, alignItems: 'center', width: '100%' }}>
-              <a href="mailto:hello.adisoft@gmail.com" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="mailto:hello@adisoftco.com" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0a3288" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                   <path d="M2 6l10 7 10-7"></path>
                 </svg>
-                hello.adisoft@gmail.com
+                hello@adisoftco.com
               </a>
               <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -379,8 +392,23 @@ export default function Home() {
               <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Cuéntanos tu caso</label>
               <textarea rows={4} value={form.message} onChange={onFieldChange('message')} placeholder="Describe brevemente lo que buscas resolver..." style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(10,50,136,0.15)', fontSize: 14, color: '#0b0b1f', outline: 'none', resize: 'vertical' }} />
             </div>
-            <button type="submit" style={{ marginTop: 4, padding: '14px 24px', borderRadius: 12, border: 'none', background: '#0a3288', color: '#ffffff', fontWeight: 600, fontSize: 15, cursor: 'pointer', transition: 'transform .2s ease' }}>Enviar mensaje</button>
+            <button type="submit" disabled={sendState === 'sending'} style={{ marginTop: 4, padding: '14px 24px', borderRadius: 12, border: 'none', background: sendState === 'sent' ? '#1e8f5f' : '#0a3288', color: '#ffffff', fontWeight: 600, fontSize: 15, cursor: sendState === 'sending' ? 'default' : 'pointer', opacity: sendState === 'sending' ? 0.75 : 1, transition: 'transform .2s ease, background .2s ease' }}>
+              {sendState === 'sending' ? 'Enviando...' : sendState === 'sent' ? '¡Mensaje enviado!' : 'Enviar mensaje'}
+            </button>
+            {sendState === 'error' && (
+              <span style={{ fontSize: 13, color: '#c0392b' }}>No se pudo enviar el mensaje. Intenta de nuevo o escríbenos a hello@adisoftco.com.</span>
+            )}
           </form>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: 1600, margin: '0 auto', padding: '32px clamp(24px,5vw,64px) 40px', position: 'relative', zIndex: 1 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(10,50,136,0.1)', paddingTop: 28 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <img src="/adisoft-isotype.png" alt="AdiSoft" style={{ height: 20, width: 'auto' }} />
+            <span style={{ fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 16, color: '#0b0b1f', letterSpacing: '-0.5px' }}>AdiSoft</span>
+          </span>
+          <span style={{ fontSize: 13, color: '#8a8a94' }}>© {new Date().getFullYear()} AdiSoft. Todos los derechos reservados.</span>
         </div>
       </div>
     </div>
