@@ -20,5 +20,5 @@ export const gradientTitle = {
   width: 'fit-content',
 };
 
-export const siteUrl = 'https://adisoftco.com';
+export const siteUrl = 'https://www.adisoftco.com';
 export const siteName = 'AdiSoft';

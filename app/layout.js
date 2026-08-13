@@ -3,7 +3,7 @@ import './globals.css';
 
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
-const siteUrl = 'https://adisoftco.com';
+const siteUrl = 'https://www.adisoftco.com';
 const siteName = 'AdiSoft';
 const title = 'AdiSoft — Consultora tecnológica en software e inteligencia artificial';
 const description = 'Consultora tecnológica con +7 años en LatAm. Desarrollo de software a medida, plataformas web, apps móviles e inteligencia artificial aplicada. Un aliado, no solo un proveedor.';

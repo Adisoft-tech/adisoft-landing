@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://adisoftco.com/sitemap.xml',
+    sitemap: 'https://www.adisoftco.com/sitemap.xml',
   };
 }

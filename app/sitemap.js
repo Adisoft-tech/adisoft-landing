@@ -1,6 +1,6 @@
 import { posts } from './blog/lib/posts';
 
-const baseUrl = 'https://adisoftco.com';
+const baseUrl = 'https://www.adisoftco.com';
 
 const staticRoutes = [
   { path: '', priority: 1, changeFrequency: 'weekly' },
