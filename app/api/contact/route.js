@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 export async function POST(request) {
-  const { name, email, sector, message } = await request.json();
+  const { name, email, sector, companySize, message } = await request.json();
 
   if (!name || !email || !message) {
     return Response.json({ error: 'Faltan campos requeridos' }, { status: 400 });
@@ -23,7 +23,7 @@ export async function POST(request) {
       to: 'hello@adisoftco.com',
       replyTo: email,
       subject: `Nuevo contacto de ${name}`,
-      text: `Nombre: ${name}\nCorreo: ${email}\nSector: ${sector || 'No especificado'}\n\nCaso:\n${message}`,
+      text: `Nombre: ${name}\nCorreo: ${email}\nSector: ${sector || 'No especificado'}\nTamaño de empresa: ${companySize || 'No especificado'}\n\nCaso:\n${message}`,
     });
     return Response.json({ ok: true });
   } catch (err) {

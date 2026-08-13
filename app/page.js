@@ -1,10 +1,13 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import { trackEvent } from './lib/analytics';
 
 const navLinks = [
   { label: 'Servicios', href: '#servicios' },
-  { label: 'Metodología', href: '#metodologia' },
-  { label: 'Tecnología', href: '#tecnologia' },
+  { label: 'Industrias', href: '#industrias' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Casos de éxito', href: '/casos-de-exito' },
   { label: 'Contacto', href: '#contacto' },
 ];
 
@@ -15,11 +18,11 @@ const pillars = [
 ];
 
 const services = [
-  { num: '01', title: 'Desarrollo de software a medida', text: 'Soluciones diseñadas específicamente para las necesidades de cada cliente.' },
-  { num: '02', title: 'Plataformas web', text: 'Sistemas y aplicaciones web robustas y escalables.' },
-  { num: '03', title: 'Aplicaciones móviles', text: 'Apps nativas y multiplataforma para iOS y Android.' },
+  { num: '01', title: 'Desarrollo de software a medida', text: 'Soluciones diseñadas específicamente para las necesidades de cada cliente.', href: '/servicios/desarrollo-software-a-medida' },
+  { num: '02', title: 'Plataformas web', text: 'Sistemas y aplicaciones web robustas y escalables.', href: '/servicios/plataformas-web' },
+  { num: '03', title: 'Aplicaciones móviles', text: 'Apps nativas y multiplataforma para iOS y Android.', href: '/servicios/aplicaciones-moviles' },
   { num: '04', title: 'Automatización de procesos', text: 'Optimización de flujos de trabajo mediante tecnología.' },
-  { num: '05', title: 'Inteligencia artificial aplicada', text: 'IA y LLMs integrados a la operación del negocio.' },
+  { num: '05', title: 'Inteligencia artificial aplicada', text: 'IA y LLMs integrados a la operación del negocio.', href: '/servicios/inteligencia-artificial-aplicada' },
   { num: '06', title: 'Integraciones entre sistemas', text: 'Conectamos herramientas y plataformas existentes.' },
   { num: '07', title: 'Diseño UX/UI', text: 'Experiencias de usuario claras, funcionales y atractivas.' },
   { num: '08', title: 'Consultoría tecnológica', text: 'Acompañamiento estratégico en decisiones de tecnología.' },
@@ -39,7 +42,15 @@ const techStack = [
   { category: 'Cloud y móvil', tools: 'AWS / Cloud e iOS / Android', text: 'Infraestructura segura y presencia en cualquier dispositivo.' },
 ];
 
-const industries = ['Inmobiliario', 'Turismo', 'Retail', 'Transporte y logística', 'Servicios empresariales', 'Salud', 'Educación'];
+const industries = [
+  { name: 'Inmobiliario', href: '/industrias/inmobiliario' },
+  { name: 'Turismo', href: '/industrias/turismo' },
+  { name: 'Retail', href: '/industrias/retail' },
+  { name: 'Transporte y logística', href: '/industrias/logistica' },
+  { name: 'Servicios empresariales' },
+  { name: 'Salud' },
+  { name: 'Educación' },
+];
 
 const whyUs = [
   { num: '01', title: 'Cercanía real', text: 'Te acompañamos como si tu proyecto fuera nuestro.' },
@@ -50,6 +61,17 @@ const whyUs = [
 
 const logoFiles = ['miruta', 'ansira', 'sociedad-cardiologia', 'eduku', 'comfandi', 'atmos', 'hylink', 'gps-trackit', 'kfc'];
 const logos = [...logoFiles, ...logoFiles];
+const clientNames = {
+  miruta: 'Miruta',
+  ansira: 'Ansira',
+  'sociedad-cardiologia': 'Sociedad de Cardiología',
+  eduku: 'Eduku',
+  comfandi: 'Comfandi',
+  atmos: 'Atmos',
+  hylink: 'Hylink',
+  'gps-trackit': 'GPS Trackit',
+  kfc: 'KFC',
+};
 
 const gradientTitle = {
   fontFamily: 'Fustat,sans-serif',
@@ -67,10 +89,17 @@ export default function Home() {
   const [rot, setRot] = useState({ x: 0, y: 0 });
   const [isoHover, setIsoHover] = useState(false);
   const [trail, setTrail] = useState([]);
-  const [form, setForm] = useState({ name: '', email: '', sector: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', sector: '', companySize: '', message: '' });
   const [sendState, setSendState] = useState('idle');
   const particleId = useRef(0);
   const particleColors = ['#0a3288', '#b8c0e0', '#3a63c8'];
+
+  useEffect(() => {
+    const interest = new URLSearchParams(window.location.search).get('interest');
+    if (interest) {
+      setForm((f) => ({ ...f, message: `Quiero conversar sobre: ${interest}. ` }));
+    }
+  }, []);
 
   const onIsoMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -98,8 +127,9 @@ export default function Home() {
   };
 
   const onNavClick = (e) => {
-    e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
+    if (!href.startsWith('#')) return;
+    e.preventDefault();
     const target = document.querySelector(href);
     if (!target) return;
     target.style.transition = 'box-shadow .6s ease, transform .6s ease';
@@ -123,7 +153,8 @@ export default function Home() {
       });
       if (!res.ok) throw new Error('send failed');
       setSendState('sent');
-      setForm({ name: '', email: '', sector: '', message: '' });
+      trackEvent('form_submit', { form_name: 'contacto', sector: form.sector, company_size: form.companySize });
+      setForm({ name: '', email: '', sector: '', companySize: '', message: '' });
     } catch {
       setSendState('error');
     }
@@ -222,7 +253,7 @@ export default function Home() {
           <div style={{ width: '100%', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)', maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 72, width: 'max-content', animation: 'logoMarquee 26s linear infinite' }}>
               {logos.map((name, i) => (
-                <img key={i} src={`/logos/${name}.png`} alt={name} style={{ height: 78, width: 'auto', objectFit: 'contain', filter: 'grayscale(1) opacity(0.7)' }} />
+                <img key={i} src={`/logos/${name}.png`} alt={`Logo de ${clientNames[name]}`} loading="lazy" style={{ height: 78, width: 'auto', objectFit: 'contain', filter: 'grayscale(1) opacity(0.7)' }} />
               ))}
             </div>
           </div>
@@ -256,14 +287,20 @@ export default function Home() {
         <span style={{ fontSize: 13, color: '#0a3288', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Qué hacemos</span>
         <h2 style={{ ...gradientTitle, fontSize: 'clamp(28px,3.4vw,40px)', margin: '12px 0 32px' }}>Servicios</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 20 }}>
-          {services.map((svc) => (
-            <div key={svc.num} style={{ position: 'relative', padding: '30px 26px', borderRadius: 18, background: '#ffffff', border: '1px solid rgba(10,50,136,0.1)', display: 'flex', flexDirection: 'column', gap: 14, overflow: 'hidden', transition: 'transform .25s ease, box-shadow .25s ease, border-color .25s ease' }}>
-              <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(10,50,136,0.08), transparent 70%)' }} />
-              <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 13, background: 'linear-gradient(135deg,#0a3288,#3a63c8)', color: '#ffffff', fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 18 }}>{svc.num}</span>
-              <h3 style={{ position: 'relative', fontWeight: 600, fontSize: 17, margin: 0, color: '#0b0b1f' }}>{svc.title}</h3>
-              <p style={{ position: 'relative', fontSize: 14, color: '#5a5a66', lineHeight: 1.6, margin: 0 }}>{svc.text}</p>
-            </div>
-          ))}
+          {services.map((svc) => {
+            const CardTag = svc.href ? Link : 'div';
+            return (
+              <CardTag key={svc.num} href={svc.href} style={{ position: 'relative', padding: '30px 26px', borderRadius: 18, background: '#ffffff', border: '1px solid rgba(10,50,136,0.1)', display: 'flex', flexDirection: 'column', gap: 14, overflow: 'hidden', transition: 'transform .25s ease, box-shadow .25s ease, border-color .25s ease', textDecoration: 'none', cursor: svc.href ? 'pointer' : 'default' }}>
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(10,50,136,0.08), transparent 70%)' }} />
+                <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 13, background: 'linear-gradient(135deg,#0a3288,#3a63c8)', color: '#ffffff', fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 18 }}>{svc.num}</span>
+                <h3 style={{ position: 'relative', fontWeight: 600, fontSize: 17, margin: 0, color: '#0b0b1f' }}>{svc.title}</h3>
+                <p style={{ position: 'relative', fontSize: 14, color: '#5a5a66', lineHeight: 1.6, margin: 0 }}>{svc.text}</p>
+                {svc.href && (
+                  <span style={{ position: 'relative', fontSize: 13, color: '#0a3288', fontWeight: 600 }}>Ver más →</span>
+                )}
+              </CardTag>
+            );
+          })}
         </div>
       </div>
 
@@ -318,7 +355,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1600, margin: '0 auto', padding: '132px clamp(24px,5vw,64px) 0', position: 'relative', zIndex: 1 }}>
+      <div id="industrias" style={{ maxWidth: 1600, margin: '0 auto', padding: '132px clamp(24px,5vw,64px) 0', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 48 }}>
           <div style={{ flex: '1 1 300px', minWidth: 260 }}>
             <span style={{ fontSize: 13, color: '#0a3288', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Industrias</span>
@@ -328,9 +365,14 @@ export default function Home() {
             </p>
           </div>
           <div style={{ flex: '1 1 300px', minWidth: 260, display: 'flex', flexWrap: 'wrap', gap: 10, alignContent: 'flex-start' }}>
-            {industries.map((name) => (
-              <span key={name} style={{ padding: '10px 18px', borderRadius: 999, background: '#f7f8fc', border: '1px solid rgba(10,50,136,0.12)', fontSize: 14, color: '#0b0b1f', fontWeight: 500 }}>{name}</span>
-            ))}
+            {industries.map((ind) => {
+              const ChipTag = ind.href ? Link : 'span';
+              return (
+                <ChipTag key={ind.name} href={ind.href} style={{ padding: '10px 18px', borderRadius: 999, background: '#f7f8fc', border: '1px solid rgba(10,50,136,0.12)', fontSize: 14, color: ind.href ? '#0a3288' : '#0b0b1f', fontWeight: ind.href ? 600 : 500, textDecoration: 'none' }}>
+                  {ind.name}{ind.href ? ' →' : ''}
+                </ChipTag>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -358,14 +400,14 @@ export default function Home() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 28, alignItems: 'center', width: '100%' }}>
-              <a href="mailto:hello@adisoftco.com" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="mailto:hello@adisoftco.com" onClick={() => trackEvent('contact_click', { method: 'email' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0a3288" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                   <path d="M2 6l10 7 10-7"></path>
                 </svg>
                 hello@adisoftco.com
               </a>
-              <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" onClick={() => trackEvent('contact_click', { method: 'instagram' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5"></rect>
                   <circle cx="12" cy="12" r="4"></circle>
@@ -387,6 +429,16 @@ export default function Home() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Sector donde trabajas</label>
               <input type="text" value={form.sector} onChange={onFieldChange('sector')} placeholder="Ej. Retail, salud, inmobiliario..." style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(10,50,136,0.15)', fontSize: 14, color: '#0b0b1f', outline: 'none' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Tamaño de tu empresa</label>
+              <select value={form.companySize} onChange={onFieldChange('companySize')} style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(10,50,136,0.15)', fontSize: 14, color: '#0b0b1f', outline: 'none', background: '#fff' }}>
+                <option value="">Selecciona una opción</option>
+                <option value="1-10">1-10 personas</option>
+                <option value="11-50">11-50 personas</option>
+                <option value="51-200">51-200 personas</option>
+                <option value="200+">Más de 200 personas</option>
+              </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Cuéntanos tu caso</label>
