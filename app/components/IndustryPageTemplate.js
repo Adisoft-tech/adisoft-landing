@@ -66,7 +66,7 @@ export default function IndustryPageTemplate({
       )}
 
       <Faq items={faq} />
-      <CtaBand text={`¿Tu empresa de ${breadcrumbLabel.toLowerCase()} necesita resolver algo parecido? Cuéntanos tu caso y conversemos sin compromiso.`} />
+      <CtaBand interest={breadcrumbLabel} text={`¿Tu empresa de ${breadcrumbLabel.toLowerCase()} necesita resolver algo parecido? Cuéntanos tu caso y conversemos sin compromiso.`} />
       <PageFooter />
     </div>
   );

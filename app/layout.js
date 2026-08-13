@@ -1,4 +1,7 @@
+import Script from 'next/script';
 import './globals.css';
+
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 const siteUrl = 'https://adisoftco.com';
 const siteName = 'AdiSoft';
@@ -50,6 +53,17 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        {gaMeasurementId && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} strategy="afterInteractive" />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaMeasurementId}');`}
+            </Script>
+          </>
+        )}
       </head>
       <body style={{ margin: 0, WebkitFontSmoothing: 'antialiased' }}>{children}</body>
     </html>

@@ -102,7 +102,7 @@ export default function ServicePageTemplate({
       )}
 
       <Faq items={faq} />
-      <CtaBand text={`¿Quieres explorar cómo aplicar ${breadcrumbLabel.toLowerCase()} en tu empresa? Cuéntanos tu caso y conversemos sin compromiso.`} />
+      <CtaBand interest={breadcrumbLabel} text={`¿Quieres explorar cómo aplicar ${breadcrumbLabel.toLowerCase()} en tu empresa? Cuéntanos tu caso y conversemos sin compromiso.`} />
       <PageFooter />
     </div>
   );

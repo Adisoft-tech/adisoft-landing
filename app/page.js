@@ -1,6 +1,7 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import { trackEvent } from './lib/analytics';
 
 const navLinks = [
   { label: 'Servicios', href: '#servicios' },
@@ -88,10 +89,17 @@ export default function Home() {
   const [rot, setRot] = useState({ x: 0, y: 0 });
   const [isoHover, setIsoHover] = useState(false);
   const [trail, setTrail] = useState([]);
-  const [form, setForm] = useState({ name: '', email: '', sector: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', sector: '', companySize: '', message: '' });
   const [sendState, setSendState] = useState('idle');
   const particleId = useRef(0);
   const particleColors = ['#0a3288', '#b8c0e0', '#3a63c8'];
+
+  useEffect(() => {
+    const interest = new URLSearchParams(window.location.search).get('interest');
+    if (interest) {
+      setForm((f) => ({ ...f, message: `Quiero conversar sobre: ${interest}. ` }));
+    }
+  }, []);
 
   const onIsoMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -145,7 +153,8 @@ export default function Home() {
       });
       if (!res.ok) throw new Error('send failed');
       setSendState('sent');
-      setForm({ name: '', email: '', sector: '', message: '' });
+      trackEvent('form_submit', { form_name: 'contacto', sector: form.sector, company_size: form.companySize });
+      setForm({ name: '', email: '', sector: '', companySize: '', message: '' });
     } catch {
       setSendState('error');
     }
@@ -391,14 +400,14 @@ export default function Home() {
               </p>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 28, alignItems: 'center', width: '100%' }}>
-              <a href="mailto:hello@adisoftco.com" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="mailto:hello@adisoftco.com" onClick={() => trackEvent('contact_click', { method: 'email' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px 28px', borderRadius: 16, background: '#ffffff', color: '#0a3288', fontWeight: 600, fontSize: 16, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0a3288" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="4" width="20" height="16" rx="2"></rect>
                   <path d="M2 6l10 7 10-7"></path>
                 </svg>
                 hello@adisoftco.com
               </a>
-              <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" onClick={() => trackEvent('contact_click', { method: 'instagram' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5"></rect>
                   <circle cx="12" cy="12" r="4"></circle>
@@ -420,6 +429,16 @@ export default function Home() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Sector donde trabajas</label>
               <input type="text" value={form.sector} onChange={onFieldChange('sector')} placeholder="Ej. Retail, salud, inmobiliario..." style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(10,50,136,0.15)', fontSize: 14, color: '#0b0b1f', outline: 'none' }} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Tamaño de tu empresa</label>
+              <select value={form.companySize} onChange={onFieldChange('companySize')} style={{ padding: '12px 14px', borderRadius: 10, border: '1px solid rgba(10,50,136,0.15)', fontSize: 14, color: '#0b0b1f', outline: 'none', background: '#fff' }}>
+                <option value="">Selecciona una opción</option>
+                <option value="1-10">1-10 personas</option>
+                <option value="11-50">11-50 personas</option>
+                <option value="51-200">51-200 personas</option>
+                <option value="200+">Más de 200 personas</option>
+              </select>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <label style={{ fontSize: 13, fontWeight: 600, color: '#0b0b1f' }}>Cuéntanos tu caso</label>
