@@ -4,9 +4,10 @@ import PageFooter from './PageFooter';
 import Breadcrumbs from './Breadcrumbs';
 import Faq from './Faq';
 import CtaBand from './CtaBand';
-import { colors, gradientTitle } from '../lib/theme';
+import { colors, gradientTitle, siteUrl } from '../lib/theme';
 
 export default function ServicePageTemplate({
+  path,
   breadcrumbLabel,
   eyebrow,
   h1,
@@ -18,10 +19,22 @@ export default function ServicePageTemplate({
   relatedIndustries,
   faq,
 }) {
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: h1,
+    description: intro,
+    url: `${siteUrl}${path}`,
+    provider: { '@type': 'Organization', name: 'AdiSoft', url: siteUrl },
+    areaServed: ['Colombia', 'Latinoamérica'],
+    serviceType: breadcrumbLabel,
+  };
+
   return (
     <div style={{ position: 'relative', overflow: 'hidden', background: '#ffffff', fontFamily: 'Inter,sans-serif', minHeight: '100vh', color: colors.ink }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }} />
       <PageNav />
-      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/#servicios' }, { label: breadcrumbLabel }]} />
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Servicios', href: '/#servicios' }, { label: breadcrumbLabel, href: path }]} />
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,64px) 0' }}>
         <span style={{ fontSize: 13, color: colors.primary, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>{eyebrow}</span>

@@ -32,6 +32,7 @@ const faq = [
 export default function Page() {
   return (
     <ServicePageTemplate
+      path="/servicios/desarrollo-software-a-medida"
       breadcrumbLabel="Desarrollo de software a medida"
       eyebrow="Servicios"
       h1="Desarrollo de software a medida para empresas colombianas"

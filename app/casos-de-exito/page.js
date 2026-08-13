@@ -31,7 +31,7 @@ export default function Page() {
   return (
     <div style={{ background: '#ffffff', fontFamily: 'Inter,sans-serif', minHeight: '100vh', color: colors.ink }}>
       <PageNav />
-      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Casos de éxito' }]} />
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Casos de éxito', href: '/casos-de-exito' }]} />
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,64px) 0' }}>
         <span style={{ fontSize: 13, color: colors.primary, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Casos de éxito</span>

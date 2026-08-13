@@ -24,6 +24,7 @@ const faq = [
 export default function Page() {
   return (
     <IndustryPageTemplate
+      path="/industrias/turismo"
       breadcrumbLabel="Turismo"
       eyebrow="Industrias"
       h1="Tecnología para empresas de turismo"

@@ -7,6 +7,7 @@ import CtaBand from './CtaBand';
 import { colors, gradientTitle } from '../lib/theme';
 
 export default function IndustryPageTemplate({
+  path,
   breadcrumbLabel,
   eyebrow,
   h1,
@@ -19,7 +20,7 @@ export default function IndustryPageTemplate({
   return (
     <div style={{ position: 'relative', overflow: 'hidden', background: '#ffffff', fontFamily: 'Inter,sans-serif', minHeight: '100vh', color: colors.ink }}>
       <PageNav />
-      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Industrias', href: '/#industrias' }, { label: breadcrumbLabel }]} />
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Industrias', href: '/#industrias' }, { label: breadcrumbLabel, href: path }]} />
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,64px) 0' }}>
         <span style={{ fontSize: 13, color: colors.primary, fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>{eyebrow}</span>

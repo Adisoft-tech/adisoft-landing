@@ -24,6 +24,7 @@ const faq = [
 export default function Page() {
   return (
     <IndustryPageTemplate
+      path="/industrias/inmobiliario"
       breadcrumbLabel="Inmobiliario"
       eyebrow="Industrias"
       h1="Tecnología para empresas inmobiliarias"

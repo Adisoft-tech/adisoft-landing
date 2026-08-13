@@ -5,7 +5,7 @@ import PageFooter from '../../components/PageFooter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Faq from '../../components/Faq';
 import CtaBand from '../../components/CtaBand';
-import { colors, gradientTitle } from '../../lib/theme';
+import { colors, gradientTitle, siteUrl } from '../../lib/theme';
 import { posts, getPostBySlug } from '../lib/posts';
 
 export function generateStaticParams() {
@@ -27,10 +27,23 @@ export default function BlogPost({ params }) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    url: `${siteUrl}/blog/${post.slug}`,
+    author: { '@type': 'Organization', name: 'AdiSoft', url: siteUrl },
+    publisher: { '@type': 'Organization', name: 'AdiSoft', url: siteUrl, logo: { '@type': 'ImageObject', url: `${siteUrl}/adisoft-isotype.png` } },
+  };
+
   return (
     <div style={{ background: '#ffffff', fontFamily: 'Inter,sans-serif', minHeight: '100vh', color: colors.ink }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <PageNav />
-      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Blog', href: '/blog' }, { label: post.title }]} />
+      <Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Blog', href: '/blog' }, { label: post.title, href: `/blog/${post.slug}` }]} />
 
       <article style={{ maxWidth: 760, margin: '0 auto', padding: 'clamp(32px,5vw,56px) clamp(24px,5vw,64px) 0' }}>
         <span style={{ fontSize: 12, color: colors.primary, fontWeight: 600, letterSpacing: 0.5, textTransform: 'uppercase' }}>{post.category}</span>

@@ -28,6 +28,7 @@ const faq = [
 export default function Page() {
   return (
     <ServicePageTemplate
+      path="/servicios/plataformas-web"
       breadcrumbLabel="Plataformas web"
       eyebrow="Servicios"
       h1="Plataformas web robustas y escalables"

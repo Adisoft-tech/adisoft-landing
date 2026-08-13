@@ -28,6 +28,7 @@ const faq = [
 export default function Page() {
   return (
     <ServicePageTemplate
+      path="/servicios/aplicaciones-moviles"
       breadcrumbLabel="Aplicaciones móviles"
       eyebrow="Servicios"
       h1="Aplicaciones móviles para iOS y Android"

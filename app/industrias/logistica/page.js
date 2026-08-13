@@ -24,6 +24,7 @@ const faq = [
 export default function Page() {
   return (
     <IndustryPageTemplate
+      path="/industrias/logistica"
       breadcrumbLabel="Transporte y logística"
       eyebrow="Industrias"
       h1="Tecnología para transporte y logística"
