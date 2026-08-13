@@ -1,10 +1,12 @@
 'use client';
 import { useState, useRef } from 'react';
+import Link from 'next/link';
 
 const navLinks = [
   { label: 'Servicios', href: '#servicios' },
-  { label: 'Metodología', href: '#metodologia' },
-  { label: 'Tecnología', href: '#tecnologia' },
+  { label: 'Industrias', href: '#industrias' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Casos de éxito', href: '/casos-de-exito' },
   { label: 'Contacto', href: '#contacto' },
 ];
 
@@ -15,11 +17,11 @@ const pillars = [
 ];
 
 const services = [
-  { num: '01', title: 'Desarrollo de software a medida', text: 'Soluciones diseñadas específicamente para las necesidades de cada cliente.' },
-  { num: '02', title: 'Plataformas web', text: 'Sistemas y aplicaciones web robustas y escalables.' },
-  { num: '03', title: 'Aplicaciones móviles', text: 'Apps nativas y multiplataforma para iOS y Android.' },
+  { num: '01', title: 'Desarrollo de software a medida', text: 'Soluciones diseñadas específicamente para las necesidades de cada cliente.', href: '/servicios/desarrollo-software-a-medida' },
+  { num: '02', title: 'Plataformas web', text: 'Sistemas y aplicaciones web robustas y escalables.', href: '/servicios/plataformas-web' },
+  { num: '03', title: 'Aplicaciones móviles', text: 'Apps nativas y multiplataforma para iOS y Android.', href: '/servicios/aplicaciones-moviles' },
   { num: '04', title: 'Automatización de procesos', text: 'Optimización de flujos de trabajo mediante tecnología.' },
-  { num: '05', title: 'Inteligencia artificial aplicada', text: 'IA y LLMs integrados a la operación del negocio.' },
+  { num: '05', title: 'Inteligencia artificial aplicada', text: 'IA y LLMs integrados a la operación del negocio.', href: '/servicios/inteligencia-artificial-aplicada' },
   { num: '06', title: 'Integraciones entre sistemas', text: 'Conectamos herramientas y plataformas existentes.' },
   { num: '07', title: 'Diseño UX/UI', text: 'Experiencias de usuario claras, funcionales y atractivas.' },
   { num: '08', title: 'Consultoría tecnológica', text: 'Acompañamiento estratégico en decisiones de tecnología.' },
@@ -39,7 +41,15 @@ const techStack = [
   { category: 'Cloud y móvil', tools: 'AWS / Cloud e iOS / Android', text: 'Infraestructura segura y presencia en cualquier dispositivo.' },
 ];
 
-const industries = ['Inmobiliario', 'Turismo', 'Retail', 'Transporte y logística', 'Servicios empresariales', 'Salud', 'Educación'];
+const industries = [
+  { name: 'Inmobiliario', href: '/industrias/inmobiliario' },
+  { name: 'Turismo', href: '/industrias/turismo' },
+  { name: 'Retail', href: '/industrias/retail' },
+  { name: 'Transporte y logística', href: '/industrias/logistica' },
+  { name: 'Servicios empresariales' },
+  { name: 'Salud' },
+  { name: 'Educación' },
+];
 
 const whyUs = [
   { num: '01', title: 'Cercanía real', text: 'Te acompañamos como si tu proyecto fuera nuestro.' },
@@ -50,6 +60,17 @@ const whyUs = [
 
 const logoFiles = ['miruta', 'ansira', 'sociedad-cardiologia', 'eduku', 'comfandi', 'atmos', 'hylink', 'gps-trackit', 'kfc'];
 const logos = [...logoFiles, ...logoFiles];
+const clientNames = {
+  miruta: 'Miruta',
+  ansira: 'Ansira',
+  'sociedad-cardiologia': 'Sociedad de Cardiología',
+  eduku: 'Eduku',
+  comfandi: 'Comfandi',
+  atmos: 'Atmos',
+  hylink: 'Hylink',
+  'gps-trackit': 'GPS Trackit',
+  kfc: 'KFC',
+};
 
 const gradientTitle = {
   fontFamily: 'Fustat,sans-serif',
@@ -98,8 +119,9 @@ export default function Home() {
   };
 
   const onNavClick = (e) => {
-    e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
+    if (!href.startsWith('#')) return;
+    e.preventDefault();
     const target = document.querySelector(href);
     if (!target) return;
     target.style.transition = 'box-shadow .6s ease, transform .6s ease';
@@ -222,7 +244,7 @@ export default function Home() {
           <div style={{ width: '100%', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)', maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 72, width: 'max-content', animation: 'logoMarquee 26s linear infinite' }}>
               {logos.map((name, i) => (
-                <img key={i} src={`/logos/${name}.png`} alt={name} style={{ height: 78, width: 'auto', objectFit: 'contain', filter: 'grayscale(1) opacity(0.7)' }} />
+                <img key={i} src={`/logos/${name}.png`} alt={`Logo de ${clientNames[name]}`} loading="lazy" style={{ height: 78, width: 'auto', objectFit: 'contain', filter: 'grayscale(1) opacity(0.7)' }} />
               ))}
             </div>
           </div>
@@ -256,14 +278,20 @@ export default function Home() {
         <span style={{ fontSize: 13, color: '#0a3288', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Qué hacemos</span>
         <h2 style={{ ...gradientTitle, fontSize: 'clamp(28px,3.4vw,40px)', margin: '12px 0 32px' }}>Servicios</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 20 }}>
-          {services.map((svc) => (
-            <div key={svc.num} style={{ position: 'relative', padding: '30px 26px', borderRadius: 18, background: '#ffffff', border: '1px solid rgba(10,50,136,0.1)', display: 'flex', flexDirection: 'column', gap: 14, overflow: 'hidden', transition: 'transform .25s ease, box-shadow .25s ease, border-color .25s ease' }}>
-              <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(10,50,136,0.08), transparent 70%)' }} />
-              <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 13, background: 'linear-gradient(135deg,#0a3288,#3a63c8)', color: '#ffffff', fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 18 }}>{svc.num}</span>
-              <h3 style={{ position: 'relative', fontWeight: 600, fontSize: 17, margin: 0, color: '#0b0b1f' }}>{svc.title}</h3>
-              <p style={{ position: 'relative', fontSize: 14, color: '#5a5a66', lineHeight: 1.6, margin: 0 }}>{svc.text}</p>
-            </div>
-          ))}
+          {services.map((svc) => {
+            const CardTag = svc.href ? Link : 'div';
+            return (
+              <CardTag key={svc.num} href={svc.href} style={{ position: 'relative', padding: '30px 26px', borderRadius: 18, background: '#ffffff', border: '1px solid rgba(10,50,136,0.1)', display: 'flex', flexDirection: 'column', gap: 14, overflow: 'hidden', transition: 'transform .25s ease, box-shadow .25s ease, border-color .25s ease', textDecoration: 'none', cursor: svc.href ? 'pointer' : 'default' }}>
+                <div style={{ position: 'absolute', top: -40, right: -40, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(10,50,136,0.08), transparent 70%)' }} />
+                <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, height: 48, borderRadius: 13, background: 'linear-gradient(135deg,#0a3288,#3a63c8)', color: '#ffffff', fontFamily: 'Fustat,sans-serif', fontWeight: 700, fontSize: 18 }}>{svc.num}</span>
+                <h3 style={{ position: 'relative', fontWeight: 600, fontSize: 17, margin: 0, color: '#0b0b1f' }}>{svc.title}</h3>
+                <p style={{ position: 'relative', fontSize: 14, color: '#5a5a66', lineHeight: 1.6, margin: 0 }}>{svc.text}</p>
+                {svc.href && (
+                  <span style={{ position: 'relative', fontSize: 13, color: '#0a3288', fontWeight: 600 }}>Ver más →</span>
+                )}
+              </CardTag>
+            );
+          })}
         </div>
       </div>
 
@@ -318,7 +346,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1600, margin: '0 auto', padding: '132px clamp(24px,5vw,64px) 0', position: 'relative', zIndex: 1 }}>
+      <div id="industrias" style={{ maxWidth: 1600, margin: '0 auto', padding: '132px clamp(24px,5vw,64px) 0', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 48 }}>
           <div style={{ flex: '1 1 300px', minWidth: 260 }}>
             <span style={{ fontSize: 13, color: '#0a3288', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Industrias</span>
@@ -328,9 +356,14 @@ export default function Home() {
             </p>
           </div>
           <div style={{ flex: '1 1 300px', minWidth: 260, display: 'flex', flexWrap: 'wrap', gap: 10, alignContent: 'flex-start' }}>
-            {industries.map((name) => (
-              <span key={name} style={{ padding: '10px 18px', borderRadius: 999, background: '#f7f8fc', border: '1px solid rgba(10,50,136,0.12)', fontSize: 14, color: '#0b0b1f', fontWeight: 500 }}>{name}</span>
-            ))}
+            {industries.map((ind) => {
+              const ChipTag = ind.href ? Link : 'span';
+              return (
+                <ChipTag key={ind.name} href={ind.href} style={{ padding: '10px 18px', borderRadius: 999, background: '#f7f8fc', border: '1px solid rgba(10,50,136,0.12)', fontSize: 14, color: ind.href ? '#0a3288' : '#0b0b1f', fontWeight: ind.href ? 600 : 500, textDecoration: 'none' }}>
+                  {ind.name}{ind.href ? ' →' : ''}
+                </ChipTag>
+              );
+            })}
           </div>
         </div>
       </div>
