@@ -1,7 +1,7 @@
 import ServicePageTemplate from '../../components/ServicePageTemplate';
 
 const title = 'Desarrollo de software a medida en Colombia';
-const description = 'Diseñamos y desarrollamos software a medida para empresas colombianas: sistemas que se adaptan a tu operación, no al revés. Análisis de negocio, arquitectura, desarrollo iterativo y soporte.';
+const description = 'Diseñamos y desarrollamos software a medida y sistemas a medida para empresas colombianas: se adaptan a tu operación, no al revés. Análisis de negocio, arquitectura, desarrollo iterativo y soporte.';
 
 export const metadata = {
   title,
@@ -36,7 +36,7 @@ export default function Page() {
       breadcrumbLabel="Desarrollo de software a medida"
       eyebrow="Servicios"
       h1="Desarrollo de software a medida para empresas colombianas"
-      intro="Construimos sistemas diseñados específicamente para tu operación, no plantillas genéricas que te obligan a cambiar tus procesos. Empezamos por entender tu negocio antes de escribir una sola línea de código."
+      intro="Construimos software y sistemas a medida diseñados específicamente para tu operación, no plantillas genéricas que te obligan a cambiar tus procesos. Empezamos por entender tu negocio antes de escribir una sola línea de código."
       painPoints={[
         'Tu proceso actual depende de hojas de cálculo, WhatsApp o sistemas que no se hablan entre sí.',
         'Ya evaluaste software genérico (SaaS) del mercado y ninguno se ajusta a cómo realmente opera tu empresa.',
