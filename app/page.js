@@ -407,13 +407,13 @@ export default function Home() {
                 </svg>
                 hello@adisoftco.com
               </a>
-              <a href="https://instagram.com/adisoft.tech" target="_blank" rel="noreferrer" onClick={() => trackEvent('contact_click', { method: 'instagram' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
+              <a href="https://instagram.com/adisoftco" target="_blank" rel="noreferrer" onClick={() => trackEvent('contact_click', { method: 'instagram' })} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '16px 28px', borderRadius: 16, background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.3)', color: '#ffffff', fontSize: 16, fontWeight: 600, textDecoration: 'none', width: '100%', maxWidth: 340, transition: 'transform .3s ease' }}>
                 <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5"></rect>
                   <circle cx="12" cy="12" r="4"></circle>
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle>
                 </svg>
-                @adisoft.tech
+                @adisoftco
               </a>
             </div>
           </div>

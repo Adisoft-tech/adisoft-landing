@@ -38,7 +38,7 @@ const organizationJsonLd = {
   logo: `${siteUrl}/adisoft-isotype.png`,
   description,
   email: 'hello@adisoftco.com',
-  sameAs: ['https://instagram.com/adisoft.tech'],
+  sameAs: ['https://instagram.com/adisoftco'],
   areaServed: ['Colombia', 'Latinoamérica'],
   slogan: 'Un aliado, no solo un proveedor',
 };
