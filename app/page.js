@@ -59,7 +59,7 @@ const whyUs = [
   { num: '04', title: 'Presencia regional', text: 'Trabajamos con empresas en Colombia y Latinoamérica.' },
 ];
 
-const logoFiles = ['miruta', 'ansira', 'sociedad-cardiologia', 'eduku', 'comfandi', 'atmos', 'hylink', 'gps-trackit', 'kfc'];
+const logoFiles = ['miruta', 'ansira', 'sociedad-cardiologia', 'eduku', 'comfandi', 'atmos', 'hylink', 'gps-trackit', 'kfc', 'dti-travel', 'el-viajero-inquieto'];
 const logos = [...logoFiles, ...logoFiles];
 const clientNames = {
   miruta: 'Miruta',
@@ -71,6 +71,8 @@ const clientNames = {
   hylink: 'Hylink',
   'gps-trackit': 'GPS Trackit',
   kfc: 'KFC',
+  'dti-travel': 'DTI Travel',
+  'el-viajero-inquieto': 'El Viajero Inquieto',
 };
 
 const gradientTitle = {
