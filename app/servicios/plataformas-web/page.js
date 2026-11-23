@@ -51,11 +51,6 @@ export default function Page() {
         'Negocios que quieren digitalizar un proceso completo (reservas, solicitudes, gestión de inventario) en una plataforma propia.',
         'Equipos que están limitados por las reglas de una herramienta de terceros y necesitan algo construido a su medida.',
       ]}
-      relatedIndustries={[
-        { href: '/industrias/turismo', label: 'Turismo' },
-        { href: '/industrias/inmobiliario', label: 'Inmobiliario' },
-        { href: '/industrias/retail', label: 'Retail' },
-      ]}
       faq={faq}
     />
   );

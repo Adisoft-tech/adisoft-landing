@@ -55,11 +55,6 @@ export default function Page() {
         'Empresas con un proceso manual doloroso y repetitivo dentro de logística, salud, educación u otro sector.',
         'Equipos de TI que necesitan una herramienta interna a medida en lugar de forzar un SaaS genérico.',
       ]}
-      relatedIndustries={[
-        { href: '/industrias/logistica', label: 'Transporte y logística' },
-        { href: '/industrias/retail', label: 'Retail' },
-        { href: '/industrias/inmobiliario', label: 'Inmobiliario' },
-      ]}
       faq={faq}
     />
   );

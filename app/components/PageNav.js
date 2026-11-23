@@ -3,9 +3,7 @@ import { colors } from '../lib/theme';
 
 const navLinks = [
   { label: 'Servicios', href: '/#servicios' },
-  { label: 'Industrias', href: '/#industrias' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Casos de éxito', href: '/casos-de-exito' },
   { label: 'Academy', href: '/academy', accent: true },
   { label: 'Contacto', href: '/#contacto' },
 ];

@@ -51,10 +51,6 @@ export default function Page() {
         'Directores de TI evaluando cómo incorporar IA de forma responsable y medible, no como experimento aislado.',
         'Negocios con mucha información dispersa que hoy nadie está aprovechando.',
       ]}
-      relatedIndustries={[
-        { href: '/industrias/logistica', label: 'Transporte y logística' },
-        { href: '/industrias/retail', label: 'Retail' },
-      ]}
       faq={faq}
     />
   );

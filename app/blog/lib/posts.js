@@ -270,7 +270,6 @@ export const posts = [
     ],
     relatedLinks: [
       { href: '/servicios/inteligencia-artificial-aplicada', label: 'Inteligencia artificial aplicada' },
-      { href: '/industrias/logistica', label: 'Transporte y logística' },
     ],
   },
 ];

@@ -51,11 +51,6 @@ export default function Page() {
         'Empresas que quieren una app interna para equipos de campo, ventas o logística.',
         'Negocios que ya tienen una app y necesitan modernizarla o rehacerla.',
       ]}
-      relatedIndustries={[
-        { href: '/industrias/turismo', label: 'Turismo' },
-        { href: '/industrias/retail', label: 'Retail' },
-        { href: '/industrias/logistica', label: 'Transporte y logística' },
-      ]}
       faq={faq}
     />
   );

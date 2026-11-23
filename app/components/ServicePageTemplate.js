@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import PageNav from './PageNav';
 import PageFooter from './PageFooter';
 import Breadcrumbs from './Breadcrumbs';
@@ -16,7 +15,6 @@ export default function ServicePageTemplate({
   process,
   techStack,
   forWho,
-  relatedIndustries,
   faq,
 }) {
   const serviceJsonLd = {
@@ -87,19 +85,6 @@ export default function ServicePageTemplate({
           </ul>
         </div>
       </div>
-
-      {relatedIndustries?.length > 0 && (
-        <div style={{ maxWidth: 1000, margin: '0 auto', padding: '80px clamp(24px,5vw,64px) 0' }}>
-          <h2 style={{ ...gradientTitle, fontSize: 'clamp(22px,2.6vw,28px)', margin: '0 0 16px' }}>Industrias donde más lo aplicamos</h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-            {relatedIndustries.map((ind) => (
-              <Link key={ind.href} href={ind.href} style={{ padding: '10px 18px', borderRadius: 999, background: colors.bgSoft, border: `1px solid ${colors.border}`, fontSize: 14, color: colors.primary, fontWeight: 600, textDecoration: 'none' }}>
-                {ind.label} →
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
 
       <Faq items={faq} />
       <CtaBand interest={breadcrumbLabel} text={`¿Quieres explorar cómo aplicar ${breadcrumbLabel.toLowerCase()} en tu empresa? Cuéntanos tu caso y conversemos sin compromiso.`} />

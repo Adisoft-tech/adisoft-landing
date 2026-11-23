@@ -5,9 +5,7 @@ import { trackEvent } from './lib/analytics';
 
 const navLinks = [
   { label: 'Servicios', href: '#servicios' },
-  { label: 'Industrias', href: '#industrias' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Casos de éxito', href: '/casos-de-exito' },
   { label: 'Academy', href: '/academy', accent: true },
   { label: 'Contacto', href: '#contacto' },
 ];
@@ -41,16 +39,6 @@ const techStack = [
   { category: 'Backend', tools: 'Node.js y Python', text: 'Servicios robustos y preparados para escalar.' },
   { category: 'IA y datos', tools: 'IA / LLMs y SQL / NoSQL', text: 'Automatización e inteligencia aplicada a la operación.' },
   { category: 'Cloud y móvil', tools: 'AWS / Cloud e iOS / Android', text: 'Infraestructura segura y presencia en cualquier dispositivo.' },
-];
-
-const industries = [
-  { name: 'Inmobiliario', href: '/industrias/inmobiliario' },
-  { name: 'Turismo', href: '/industrias/turismo' },
-  { name: 'Retail', href: '/industrias/retail' },
-  { name: 'Transporte y logística', href: '/industrias/logistica' },
-  { name: 'Servicios empresariales' },
-  { name: 'Salud' },
-  { name: 'Educación' },
 ];
 
 const whyUs = [
@@ -356,28 +344,6 @@ export default function Home() {
               <p style={{ fontSize: 14, color: '#5a5a66', lineHeight: 1.5, margin: 0 }}>{stack.text}</p>
             </div>
           ))}
-        </div>
-      </div>
-
-      <div id="industrias" style={{ maxWidth: 1600, margin: '0 auto', padding: '132px clamp(24px,5vw,64px) 0', position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 48 }}>
-          <div style={{ flex: '1 1 300px', minWidth: 260 }}>
-            <span style={{ fontSize: 13, color: '#0a3288', fontWeight: 600, letterSpacing: 1, textTransform: 'uppercase' }}>Industrias</span>
-            <h2 style={{ ...gradientTitle, fontSize: 'clamp(24px,2.8vw,32px)', lineHeight: 1.2, margin: '12px 0 16px' }}>Dónde generamos más impacto</h2>
-            <p style={{ fontSize: 15, color: '#5a5a66', lineHeight: 1.7, margin: 0 }}>
-              Nuestro foco principal está en inmobiliario, turismo, retail, transporte y logística. También trabajamos con empresas de servicios empresariales, salud y educación.
-            </p>
-          </div>
-          <div style={{ flex: '1 1 300px', minWidth: 260, display: 'flex', flexWrap: 'wrap', gap: 10, alignContent: 'flex-start' }}>
-            {industries.map((ind) => {
-              const ChipTag = ind.href ? Link : 'span';
-              return (
-                <ChipTag key={ind.name} href={ind.href} style={{ padding: '10px 18px', borderRadius: 999, background: '#f7f8fc', border: '1px solid rgba(10,50,136,0.12)', fontSize: 14, color: ind.href ? '#0a3288' : '#0b0b1f', fontWeight: ind.href ? 600 : 500, textDecoration: 'none' }}>
-                  {ind.name}{ind.href ? ' →' : ''}
-                </ChipTag>
-              );
-            })}
-          </div>
         </div>
       </div>
 
