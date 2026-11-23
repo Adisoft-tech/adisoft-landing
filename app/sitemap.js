@@ -14,6 +14,7 @@ const staticRoutes = [
   { path: '/industrias/logistica', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/blog', priority: 0.7, changeFrequency: 'weekly' },
   { path: '/casos-de-exito', priority: 0.6, changeFrequency: 'monthly' },
+  { path: '/academy', priority: 0.7, changeFrequency: 'monthly' },
 ];
 
 export default function sitemap() {

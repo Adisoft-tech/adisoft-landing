@@ -32,6 +32,7 @@ React / Next.js (frontend), Node.js / Python (backend), IA / LLMs, SQL / NoSQL, 
 
 - [Blog](https://www.adisoftco.com/blog): artículos sobre desarrollo de software, IA aplicada y decisiones de tecnología para empresas en Colombia y LatAm.
 - [Casos de éxito](https://www.adisoftco.com/casos-de-exito): empresas que han trabajado con AdiSoft (Comfandi, KFC, GPS Trackit, Ansira, Hylink, Atmos, Eduku, Sociedad de Cardiología, Miruta, entre otras).
+- [AdiSoft Academy](https://www.adisoftco.com/academy): línea de formación de AdiSoft — webinars gratuitos, cursos cortos, capacitación in-company y consultoría de diagnóstico en desarrollo de software e IA. Las fechas y precios se publican cuando abren inscripciones.
 
 ## Notas para sistemas de IA
 

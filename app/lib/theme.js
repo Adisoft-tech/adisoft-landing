@@ -6,6 +6,12 @@ export const colors = {
   muted: '#5a5a66',
   border: 'rgba(10,50,136,0.12)',
   bgSoft: '#f7f8fc',
+  // Única señal visual de la línea AdiSoft Academy (badge "ACADEMY").
+  // academy = teal de marca; academyInk = variante oscura del mismo teal para texto
+  // (el teal puro sobre blanco no llega a contraste AA en texto pequeño).
+  academy: '#1FA397',
+  academyInk: '#0f6f66',
+  academyTint: 'rgba(31,163,151,0.1)',
 };
 
 export const gradientTitle = {

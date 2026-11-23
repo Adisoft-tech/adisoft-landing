@@ -6,6 +6,7 @@ const navLinks = [
   { label: 'Industrias', href: '/#industrias' },
   { label: 'Blog', href: '/blog' },
   { label: 'Casos de éxito', href: '/casos-de-exito' },
+  { label: 'Academy', href: '/academy', accent: true },
   { label: 'Contacto', href: '/#contacto' },
 ];
 
@@ -19,7 +20,8 @@ export default function PageNav() {
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(10px,2vw,22px)', flexWrap: 'wrap' }}>
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} style={{ color: colors.ink, fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', padding: '6px 4px' }}>
+            <a key={link.href} href={link.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: colors.ink, fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', padding: '6px 4px' }}>
+              {link.accent && <span aria-hidden="true" style={{ width: 6, height: 6, borderRadius: '50%', background: colors.academy }} />}
               {link.label}
             </a>
           ))}
